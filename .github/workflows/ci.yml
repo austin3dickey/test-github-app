@@ -1,0 +1,30 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  run-check:
+    runs-on: ubuntu-latest
+    env:
+      APP_ID: 238842
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+      - name: Install python deps
+        run: pip install requests 'pyjwt[crypto]'
+      - name: Get API token
+        run: |
+          token=$(
+            python get_token.py \
+              -a ${{ env.APP_ID }} \
+              -k '${{ secrets.PRIVATE_KEY }}'
+          )
+          echo "API_TOKEN=${token}" >> $GITHUB_ENV
+      - name: Use API token
+        run: python test.py
