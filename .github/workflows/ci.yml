@@ -11,7 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APP_ID: 238842
+      DATALOGISTIK_REPO: https://raw.githubusercontent.com/conbench/datalogistik/${{ github.head_ref || github.ref_name }}/repo.json
     steps:
+      - name: Test something
+        run: echo $DATALOGISTIK_REPO
       - name: Check out repo
         uses: actions/checkout@v2
       - name: Set up Python
