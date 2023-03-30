@@ -1,6 +1,5 @@
 import argparse
 from datetime import datetime, timedelta
-from pprint import pprint
 
 import jwt
 import requests
